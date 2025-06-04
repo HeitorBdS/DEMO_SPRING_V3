@@ -1,0 +1,13 @@
+com\exemplo\demo\model\Usuario.class
+com\exemplo\demo\repository\MensagemRepository.class
+com\exemplo\demo\controller\MensagemController.class
+com\exemplo\demo\service\MensagemService.class
+com\exemplo\demo\service\UsuarioService.class
+com\exemplo\demo\DemoApplication.class
+com\exemplo\demo\MensagemService.class
+com\exemplo\demo\MensagemServiceImpl.class
+com\exemplo\demo\model\Mensagem.class
+com\exemplo\demo\controller\UsuarioController.class
+com\exemplo\demo\UsuarioService.class
+com\exemplo\demo\repository\UsuarioRepository.class
+com\exemplo\demo\UsuarioServiceImpl.class
