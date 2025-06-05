@@ -5,13 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dfb18a78-181b-4afb-a34a-2a68d384d11b" name="Changes" comment="Mudanças necessárias para o banco e o API">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DEMO_SPRING/demo_springboot_project/src/main/java/com/exemplo/demo/controller/UsuarioController.java" beforeDir="false" afterPath="$PROJECT_DIR$/DEMO_SPRING/demo_springboot_project/src/main/java/com/exemplo/demo/controller/UsuarioController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DEMO_SPRING/demo_springboot_project/src/main/java/com/exemplo/demo/dto/UsuarioDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/DEMO_SPRING/demo_springboot_project/src/main/java/com/exemplo/demo/dto/UsuarioDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DEMO_SPRING/demo_springboot_project/src/main/java/com/exemplo/demo/dto/UsuarioUpdateDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/DEMO_SPRING/demo_springboot_project/src/main/java/com/exemplo/demo/dto/UsuarioUpdateDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DEMO_SPRING/demo_springboot_project/src/main/java/com/exemplo/demo/model/Usuario.java" beforeDir="false" afterPath="$PROJECT_DIR$/DEMO_SPRING/demo_springboot_project/src/main/java/com/exemplo/demo/model/Usuario.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DEMO_SPRING/demo_springboot_project/src/main/java/com/exemplo/demo/service/UsuarioService.java" beforeDir="false" afterPath="$PROJECT_DIR$/DEMO_SPRING/demo_springboot_project/src/main/java/com/exemplo/demo/service/UsuarioService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DEMO_SPRING/demo_springboot_project/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/DEMO_SPRING/demo_springboot_project/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -234,7 +228,15 @@
       <option name="project" value="LOCAL" />
       <updated>1749154921231</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Mudanças necessárias para o banco e o API">
+      <option name="closed" value="true" />
+      <created>1749166954478</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1749166954478</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
