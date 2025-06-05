@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-@Service // Esta é a única classe de serviço que você terá
-public class UsuarioService { // Sem implementar interface, é uma classe concreta direta
+@Service
+public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
 
@@ -18,12 +18,10 @@ public class UsuarioService { // Sem implementar interface, é uma classe concre
     }
 
     public Usuario cadastrar(Usuario usuario) {
-        // Lembre-se: HASHEAR SENHA AQUI ANTES DE SALVAR!
         return usuarioRepository.save(usuario);
     }
 
     public Optional<Usuario> autenticar(String email, String senha) {
-        // Lembre-se: Comparar HASHES das senhas aqui!
         return usuarioRepository.findByEmailAndSenha(email, senha);
     }
 
@@ -36,7 +34,6 @@ public class UsuarioService { // Sem implementar interface, é uma classe concre
         if (usuarioOptional.isPresent()) {
             Usuario usuarioExistente = usuarioOptional.get();
 
-            // CUIDADO AQUI: Copiando manualmente APENAS os campos permitidos.
             if (usuarioAtualizacao.getNome() != null) {
                 usuarioExistente.setNome(usuarioAtualizacao.getNome());
             }

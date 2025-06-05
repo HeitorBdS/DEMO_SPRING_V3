@@ -6,10 +6,8 @@ public class UsuarioDTO {
     private String email;
     private String telefone;
 
-    // Construtor padrão (necessário para Spring/Jackson)
     public UsuarioDTO() {}
 
-    // Construtor para mapear de Usuario (entidade) para UsuarioDTO
     public UsuarioDTO(Long id, String nome, String email, String telefone) {
         this.id = id;
         this.nome = nome;
@@ -17,7 +15,6 @@ public class UsuarioDTO {
         this.telefone = telefone;
     }
 
-    // Getters e Setters
     public Long getId() {
         return id;
     }
