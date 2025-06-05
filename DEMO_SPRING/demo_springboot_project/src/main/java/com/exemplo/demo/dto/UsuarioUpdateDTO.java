@@ -1,0 +1,26 @@
+package com.exemplo.demo.dto;
+
+public class UsuarioUpdateDTO {
+    private String nome;
+    private String telefone;
+
+    // Construtor padrão
+    public UsuarioUpdateDTO() {}
+
+    // Getters e Setters
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+}
