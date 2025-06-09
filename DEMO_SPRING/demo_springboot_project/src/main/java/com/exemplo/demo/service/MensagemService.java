@@ -3,16 +3,18 @@ package com.exemplo.demo.service;
 import com.exemplo.demo.model.Mensagem;
 import com.exemplo.demo.model.Usuario;
 import com.exemplo.demo.repository.MensagemRepository;
+import com.exemplo.demo.dto.MensagemDTO;
+import com.exemplo.demo.dto.MensagemRequestDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class MensagemService {
 
     private final MensagemRepository mensagemRepository;
-
     private final UsuarioService usuarioService;
 
     public MensagemService(MensagemRepository mensagemRepository, UsuarioService usuarioService) {
@@ -20,30 +22,65 @@ public class MensagemService {
         this.usuarioService = usuarioService;
     }
 
-    public Mensagem salvarMensagem(Mensagem mensagem) {
-        if (mensagem.getUsuario() != null && mensagem.getUsuario().getId() != null) {
-            Optional<Usuario> usuarioOpt = usuarioService.buscarUsuarioPorId(mensagem.getUsuario().getId());
-            if (usuarioOpt.isPresent()) {
-                mensagem.setUsuario(usuarioOpt.get());
-            } else {
-                throw new IllegalArgumentException("Usuário com ID " + mensagem.getUsuario().getId() + " não encontrado.");
-            }
-        } else {
-            throw new IllegalArgumentException("Mensagem deve ter um usuário associado.");
+    public MensagemDTO salvarMensagem(MensagemRequestDTO mensagemRequestDTO) {
+        if (mensagemRequestDTO.getUsuarioId() == null) {
+            throw new IllegalArgumentException("Mensagem deve ter um ID de usuário associado.");
         }
-        return mensagemRepository.save(mensagem);
+
+        Optional<Usuario> usuarioOpt = usuarioService.buscarUsuarioPorId(mensagemRequestDTO.getUsuarioId());
+
+        if (usuarioOpt.isEmpty()) {
+            throw new IllegalArgumentException("Usuário com ID " + mensagemRequestDTO.getUsuarioId() + " não encontrado.");
+        }
+
+        Mensagem mensagem = new Mensagem();
+        mensagem.setUsuario(usuarioOpt.get());
+        mensagem.setConteudo(mensagemRequestDTO.getConteudo());
+
+        Mensagem novaMensagem = mensagemRepository.save(mensagem);
+
+        return new MensagemDTO(
+                novaMensagem.getId(),
+                novaMensagem.getUsuario().getId(),
+                novaMensagem.getUsuario().getNome(),
+                novaMensagem.getConteudo()
+        );
     }
 
-    public List<Mensagem> listarTodasMensagens() {
-        return mensagemRepository.findAll();
+    private List<MensagemDTO> mapToListMensagemDTO(List<Mensagem> mensagens) {
+        return mensagens.stream()
+                .map(msg -> new MensagemDTO(
+                        msg.getId(),
+                        msg.getUsuario().getId(),
+                        msg.getUsuario().getNome(),
+                        msg.getConteudo()
+                        // msg.getDataEnvio()
+                ))
+                .collect(Collectors.toList());
     }
 
-    public List<Mensagem> listarMensagensPorUsuario(Usuario usuario) {
-        return mensagemRepository.findByUsuario(usuario);
+    public List<MensagemDTO> listarTodasMensagens() {
+        List<Mensagem> mensagens = mensagemRepository.findAll();
+        return mapToListMensagemDTO(mensagens);
     }
 
-    public Optional<Mensagem> buscarMensagemPorId(Long id) {
-        return mensagemRepository.findById(id);
+    public List<MensagemDTO> listarMensagensPorUsuario(Long usuarioId) {
+        Optional<Usuario> usuarioOpt = usuarioService.buscarUsuarioPorId(usuarioId);
+        if (usuarioOpt.isEmpty()) {
+            throw new IllegalArgumentException("Usuário com ID " + usuarioId + " não encontrado.");
+        }
+        List<Mensagem> mensagens = mensagemRepository.findByUsuario(usuarioOpt.get());
+        return mapToListMensagemDTO(mensagens);
+    }
+
+    public Optional<MensagemDTO> buscarMensagemPorId(Long id) {
+        return mensagemRepository.findById(id)
+                .map(msg -> new MensagemDTO(
+                        msg.getId(),
+                        msg.getUsuario().getId(),
+                        msg.getUsuario().getNome(),
+                        msg.getConteudo()
+                ));
     }
 
     public void deletarMensagem(Long id) {

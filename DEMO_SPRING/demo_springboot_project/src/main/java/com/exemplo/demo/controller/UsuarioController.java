@@ -2,6 +2,9 @@ package com.exemplo.demo.controller;
 
 import com.exemplo.demo.model.Usuario;
 import com.exemplo.demo.service.UsuarioService;
+import com.exemplo.demo.dto.UsuarioDTO;
+import com.exemplo.demo.dto.UsuarioRegisterDTO;
+import com.exemplo.demo.dto.UsuarioUpdateDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,10 +22,9 @@ public class UsuarioController {
     }
 
     @PostMapping("/cadastro")
-    public ResponseEntity<Usuario> cadastrar(@RequestBody Usuario usuario) {
-        Usuario novoUsuario = usuarioService.cadastrar(usuario);
-        novoUsuario.setSenha(null);
-        return ResponseEntity.status(HttpStatus.CREATED).body(novoUsuario);
+    public ResponseEntity<UsuarioDTO> cadastrar(@RequestBody UsuarioRegisterDTO registerDTO) {
+        UsuarioDTO novoUsuarioDTO = usuarioService.cadastrar(registerDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(novoUsuarioDTO);
     }
 
     @PostMapping("/login")
@@ -33,23 +35,19 @@ public class UsuarioController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Usuario> getUsuarioById(@PathVariable Long id) {
+    public ResponseEntity<UsuarioDTO> getUsuarioById(@PathVariable Long id) {
         Optional<Usuario> usuarioOptional = usuarioService.buscarUsuarioPorId(id);
-        if (usuarioOptional.isPresent()) {
-            Usuario usuario = usuarioOptional.get();
-            usuario.setSenha(null);
-            return ResponseEntity.ok(usuario);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return usuarioOptional
+                .map(usuario -> new UsuarioDTO(usuario.getId(), usuario.getNome(), usuario.getEmail(), usuario.getTelefone()))
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Usuario> updateUsuario(@PathVariable Long id, @RequestBody Usuario usuarioAtualizacao) {
-        Usuario usuarioAtualizado = usuarioService.atualizarUsuario(id, usuarioAtualizacao);
-        if (usuarioAtualizado != null) {
-            usuarioAtualizado.setSenha(null);
-            return ResponseEntity.ok(usuarioAtualizado);
+    public ResponseEntity<UsuarioDTO> updateUsuario(@PathVariable Long id, @RequestBody UsuarioUpdateDTO usuarioAtualizacaoDTO) {
+        UsuarioDTO usuarioAtualizadoDTO = usuarioService.atualizarUsuario(id, usuarioAtualizacaoDTO);
+        if (usuarioAtualizadoDTO != null) {
+            return ResponseEntity.ok(usuarioAtualizadoDTO);
         } else {
             return ResponseEntity.notFound().build();
         }

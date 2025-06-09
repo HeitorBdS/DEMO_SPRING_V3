@@ -19,4 +19,5 @@ public class Mensagem {
 
     @Column(name = "conteudo_mensagem")
     private String conteudo;
+
 }
