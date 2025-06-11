@@ -43,6 +43,15 @@ public class UsuarioController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/email/{email}")
+    public ResponseEntity<UsuarioDTO> getUsuarioByEmail(@PathVariable String email) {
+        Optional<Usuario> usuarioOptional = usuarioService.buscarUsuarioPorEmail(email);
+        return usuarioOptional
+                .map(usuario -> new UsuarioDTO(usuario.getId(), usuario.getNome(), usuario.getEmail(), usuario.getTelefone()))
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<UsuarioDTO> updateUsuario(@PathVariable Long id, @RequestBody UsuarioUpdateDTO usuarioAtualizacaoDTO) {
         UsuarioDTO usuarioAtualizadoDTO = usuarioService.atualizarUsuario(id, usuarioAtualizacaoDTO);
